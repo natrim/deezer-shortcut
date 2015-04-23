@@ -4,8 +4,8 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
 			id: 'mainDeezerWindow',
 			frame: 'none',
 			innerBounds: {
-				width: 1310,
-				height: 800,
+				width: 1350,
+				height: 820,
 				minWidth: 990,
 				minHeight: 495
 			}
