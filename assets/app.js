@@ -13,24 +13,14 @@ window.onresize = function () {
 };
 
 window.onload = function () {
-	var webview = document.querySelector('#deezerview');
-	var returnDialog = null;
-	var dialog = document.querySelector('#dialog');
-
 	addTitlebar("left-titlebar", "assets/icon_16.png", "Deezer Shortcut");
-
-	webview.addEventListener('loadstart', function () {
-		viewIsLoaded = false;
-	});
-
-	webview.addEventListener('loadstop', function () {
-		viewIsLoaded = true;
-	});
 
 	var isLoaded = false;
 	var loading = setTimeout(function () {
-		webview.reload();
+		document.querySelector('#deezerview').reload();
 	}, 10000);
+
+	var webview = document.querySelector('#deezerview');
 	webview.addEventListener('contentload', function () {
 		if (loading) {
 			clearTimeout(loading);
@@ -40,12 +30,16 @@ window.onload = function () {
 			isLoaded = true;
 		}
 	});
-
+	webview.addEventListener('loadstart', function () {
+		viewIsLoaded = false;
+	});
+	webview.addEventListener('loadstop', function () {
+		viewIsLoaded = true;
+	});
 	webview.addEventListener('newwindow', function (e) {
 		e.preventDefault();
 		window.open(e.targetUrl);
 	});
-
 	webview.addEventListener('dialog', function (e) {
 		if (e.messageType === 'prompt') {
 			console.error('prompt dialog not handled!');
@@ -65,32 +59,33 @@ window.onload = function () {
 
 		returnDialog = e.dialog;
 
-		dialog.showModal();
+		document.querySelector('#dialog').showModal();
 	});
 
-	dialog.addEventListener('close', function () {
+	var returnDialog = null;
+	document.querySelector('#dialog').addEventListener('close', function () {
 		if (returnDialog) {
 			returnDialog.cancel();
 			returnDialog = null;
 		}
 	});
-
 	document.querySelector('#dialog-ok').addEventListener('click', function () {
 		returnDialog.ok();
 		returnDialog = null;
-		dialog.close();
+		document.querySelector('#dialog').close();
 	});
-
 	document.querySelector('#dialog-cancel').addEventListener('click', function () {
 		returnDialog.cancel();
 		returnDialog = null;
-		dialog.close();
+		document.querySelector('#dialog').close();
 	});
+
+	deezerUnlimited();
+	setInterval(deezerUnlimited, 5000);
 };
 
 function deezerUnlimited() {
 	if (!viewIsLoaded) return;
-	var webview = document.querySelector('#deezerview');
 	var source =
 		"window.loadFacebox = function loadFacebox(page){console.log('no_pub');};" +
 		"if(naboo)if(naboo.removeAds)naboo.removeAds();" +
@@ -104,13 +99,10 @@ function deezerUnlimited() {
 		"$('#header_content_restriction .remaining').css('width','100%').css('background-color','#3995CD');" +
 		"$('#header_content_restriction').unbind('mouseover').bind('mouseover', function(){$('.header_hovercard').show();});";
 
-	webview.executeScript({
+	document.querySelector('#deezerview').executeScript({
 		code: "var script=document.createElement('script');script.textContent=\"" + source + "\";(document.head||document.documentElement).appendChild(script);script.parentNode.removeChild(script);"
 	});
 }
-
-deezerUnlimited();
-setInterval(deezerUnlimited, 5000);
 
 chrome.commands.onCommand.addListener(function (command) {
 	if (!viewIsLoaded) return;
