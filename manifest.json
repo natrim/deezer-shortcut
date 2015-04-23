@@ -1,0 +1,63 @@
+{
+  "manifest_version": 2,
+  "name": "Deezer Shortcut",
+  "description": "Shortcut to Deezer in window as app with media keys support",
+  "version": "1.0.10",
+
+  "minimum_chrome_version": "38",
+  "author": "Natrim",
+
+  "icons": {
+    "16": "assets/icon_16.png",
+    "128": "assets/icon_128.png"
+  },
+
+  "offline_enabled": true,
+
+  "permissions": [
+    "unlimitedStorage",
+    "notifications",
+    "webview",
+    "*://*.deezer.com/",
+    "*://api.deezer.com/",
+    "*://orange.deezer.com/"
+  ],
+
+  "commands": {
+    "NEXT-MK": {
+      "description": "Next Key",
+      "global": true,
+      "suggested_key": {
+        "default": "MediaNextTrack"
+      }
+    },
+    "PLAY-PAUSE-MK": {
+      "description": "Play/Pause Key",
+      "global": true,
+      "suggested_key": {
+        "default": "MediaPlayPause"
+      }
+    },
+    "PREV-MK": {
+      "description": "Prev Key",
+      "global": true,
+      "suggested_key": {
+        "default": "MediaPrevTrack"
+      }
+    },
+    "STOP-MK": {
+      "description": "Stop Key",
+      "global": true,
+      "suggested_key": {
+        "default": "MediaStop"
+      }
+    }
+  },
+
+  "app": {
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    }
+  }
+}
