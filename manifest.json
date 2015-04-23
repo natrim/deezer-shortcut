@@ -2,13 +2,15 @@
   "manifest_version": 2,
   "name": "Deezer Shortcut",
   "description": "Shortcut to Deezer in window as app with media keys support",
-  "version": "1.0.11",
+  "version": "1.0.12",
 
   "minimum_chrome_version": "38",
   "author": "Natrim",
 
   "icons": {
     "16": "assets/icon_16.png",
+    "32": "assets/icon_32.png",
+    "64": "assets/icon_64.png",
     "128": "assets/icon_128.png"
   },
 
