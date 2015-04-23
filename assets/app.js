@@ -1,7 +1,7 @@
 var viewIsLoaded = false;
 window.onload = function () {
 	var browserControl = new BrowserControl('#deezerview', 'http://www.deezer.com/');
-	var titlebar = new TitleBar('left', browserControl);
+	var titlebar = new TitleBar('left', browserControl); //todo: make title position switcher
 	titlebar.add('assets/icon_16.png', 'Deezer Shortcut');
 
 	var isLoaded = false;
