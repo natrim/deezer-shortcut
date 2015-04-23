@@ -1,158 +1,227 @@
-function closeWindow() {
-  window.close();
-}
+(function (global) {
+  "use strict";
 
-function backWindow() {
-  var webview = document.querySelector('#deezerview');
-  if (webview.canGoBack()) webview.back();
-}
+  global.BrowserControl = function BrowserControl(view, homeurl) {
+    this.webview = view;
+    this.homeurl = homeurl;
+  };
 
-function forwardWindow() {
-  var webview = document.querySelector('#deezerview');
-  if (webview.canGoForward()) webview.forward();
-}
+  BrowserControl.prototype.back = function back() {
+    var webview = global.document.querySelector(this.webview);
+    if (webview.canGoBack()) webview.back();
+    return this;
+  };
 
-function reloadWindow() {
-  document.querySelector('#deezerview').reload();
-}
+  BrowserControl.prototype.forward = function forward() {
+    var webview = global.document.querySelector(this.webview);
+    if (webview.canGoForward()) webview.forward();
+    return this;
+  };
 
-function homeWindow() {
-  document.querySelector('#deezerview').src = "http://www.deezer.com/";
-}
+  BrowserControl.prototype.reload = function reload() {
+    var webview = global.document.querySelector(this.webview);
+    webview.reload();
+    return this;
+  };
 
-function minimizeWindow() {
-  chrome.app.window.current().minimize();
-}
+  BrowserControl.prototype.home = function home() {
+    var webview = global.document.querySelector(this.webview);
+    webview.src = this.homeurl;
+    return this;
+  };
 
-function updateImageUrl(image_id, new_image_url) {
-  var image = document.getElementById(image_id);
-  if (image)
-    image.src = new_image_url;
-}
+  global.TitleBar = function TitleBar(position, browser) {
+    this._name = position + "-titlebar";
+    if (position !== "left" && position !== "right" && position !== "top" && position !== "bottom") throw "wrong position!";
+    this._position = position;
+    if (!global.document.getElementById("content")) throw "you need to have all things wrapped inside <div id=\"content\" />!";
+    this._browser = browser;
+  };
 
-function createImage(image_id, image_url) {
-  var image = document.createElement("img");
-  image.setAttribute("id", image_id);
-  image.src = image_url;
-  return image;
-}
+  TitleBar.prototype.closeWindow = function closeWindow() {
+    global.chrome.app.window.current().close();
+    return this;
+  };
 
-function createButton(button_id, button_name, buttonText, titleText, normal_image_url,
-  hover_image_url, click_func) {
-  var button = document.createElement("div");
-  button.setAttribute("class", button_name);
-  if (normal_image_url) {
-    var button_img = createImage(button_id, normal_image_url);
-    button.appendChild(button_img);
-    if (hover_image_url) {
-      button.onmouseover = function () {
-        updateImageUrl(button_id, hover_image_url);
-      };
-      button.onmouseout = function () {
-        updateImageUrl(button_id, normal_image_url);
-      };
+  TitleBar.prototype.minimizeWindow = function minimizeWindow() {
+    global.chrome.app.window.current().minimize();
+    return this;
+  };
+
+  TitleBar.prototype.creator = {};
+
+  TitleBar.prototype.creator.updateImageUrl = function updateImageUrl(image_id, new_image_url) {
+    var image = global.document.getElementById(image_id);
+    if (image)
+      image.src = new_image_url;
+    return this;
+  };
+
+  TitleBar.prototype.creator.createImage = function createImage(image_id, image_url) {
+    var image = global.document.createElement("img");
+    image.setAttribute("id", image_id);
+    image.src = image_url;
+    return image;
+  };
+
+  TitleBar.prototype.creator.createButton = function createButton(button_name, buttonText, titleText, normal_image_url,
+    hover_image_url, click_func) {
+    var button = global.document.createElement("div");
+    button.setAttribute("class", button_name);
+    if (normal_image_url) {
+      var button_img = this.createImage(button_name + "-image", normal_image_url);
+      button.appendChild(button_img);
+      if (hover_image_url) {
+        button.onmouseover = (function () {
+          this.updateImageUrl(button_name + "-image", hover_image_url);
+        }).bind(this);
+        button.onmouseout = (function () {
+          this.updateImageUrl(button_name + "-image", normal_image_url);
+        }).bind(this);
+      }
     }
-  }
-  if (click_func) {
-    button.onclick = click_func;
-  }
-  if (titleText) {
-    button.title = titleText;
-  }
-  if (buttonText) {
-    button.innerHTML = buttonText;
-  }
-  return button;
-}
+    if (click_func) {
+      button.onclick = click_func;
+    }
+    if (titleText) {
+      button.title = titleText;
+    }
+    if (buttonText) {
+      button.innerHTML = buttonText;
+    }
+    return button;
+  };
 
-function focusTitlebars(focus) {
-  var bg_color = focus ? "#23232C" : "#3a3d3d";
-  var titlebar = document.getElementById("left-titlebar");
-  if (titlebar)
-    titlebar.style.backgroundColor = bg_color;
-}
+  TitleBar.prototype.focus = function focusTitlebar(focus) {
+    var bg_color = focus ? "#23232C" : "#555959";
+    var titlebar = global.document.getElementById(this._name);
+    if (titlebar)
+      titlebar.style.backgroundColor = bg_color;
+  };
 
-function addTitlebar(titlebar_name, titlebar_icon_url, titlebar_text) {
-  var titlebar = document.createElement("div");
-  titlebar.setAttribute("id", titlebar_name);
-  titlebar.setAttribute("class", titlebar_name);
+  TitleBar.prototype.add = function addTitlebar(titlebar_icon_url, titlebar_text) {
+    var document = global.document;
+    var titlebar = document.createElement("div");
+    titlebar.setAttribute("id", this._name);
+    titlebar.setAttribute("class", this._name);
 
-  var icon = document.createElement("div");
-  icon.setAttribute("class", titlebar_name + "-icon");
-  icon.appendChild(createImage(titlebar_name + "icon", titlebar_icon_url));
-  titlebar.appendChild(icon);
+    var icon = document.createElement("div");
+    icon.setAttribute("class", this._name + "-icon");
+    icon.appendChild(this.creator.createImage(this._name + "icon", titlebar_icon_url));
+    titlebar.appendChild(icon);
 
-  var title = document.createElement("div");
-  title.setAttribute("class", titlebar_name + "-text");
-  title.innerText = titlebar_text;
-  titlebar.appendChild(title);
+    var title = document.createElement("div");
+    title.setAttribute("class", this._name + "-text");
+    title.innerText = titlebar_text;
+    titlebar.appendChild(title);
 
-  var minimizeButton = createButton(titlebar_name + "-minimize-button",
-    titlebar_name + "-minimize-button",
-    "&#8212;", "Minimize", null, null, minimizeWindow);
-  titlebar.appendChild(minimizeButton);
+    var closeButton = this.creator.createButton(this._name + "-close-button",
+      "", "Close", "assets/button_close.png", "assets/button_close_hover.png", this.closeWindow.bind(this));
+    titlebar.appendChild(closeButton);
 
-  var backButton = createButton(titlebar_name + "-back-button",
-    titlebar_name + "-back-button",
-    "&#9664;", "Back", null, null, backWindow);
-  titlebar.appendChild(backButton);
+    var minimizeButton = this.creator.createButton(this._name + "-minimize-button",
+      "&#8212;", "Minimize", null, null, this.minimizeWindow.bind(this));
+    titlebar.appendChild(minimizeButton);
 
-  var forwardButton = createButton(titlebar_name + "-forward-button",
-    titlebar_name + "-forward-button",
-    "&#9654;", "Forward", null, null, forwardWindow);
-  titlebar.appendChild(forwardButton);
+    if (this._browser) {
+      var backButton = this.creator.createButton(this._name + "-back-button",
+        "&#9664;", "Back", null, null, this._browser.back.bind(this._browser));
+      titlebar.appendChild(backButton);
 
-  var reloadButton = createButton(titlebar_name + "-reload-button",
-    titlebar_name + "-reload-button",
-    "&#8635;", "Reload", null, null, reloadWindow);
-  titlebar.appendChild(reloadButton);
+      var forwardButton = this.creator.createButton(this._name + "-forward-button",
+        "&#9654;", "Forward", null, null, this._browser.forward.bind(this._browser));
+      titlebar.appendChild(forwardButton);
 
-  var homeButton = createButton(titlebar_name + "-home-button",
-    titlebar_name + "-home-button",
-    "&#8962;", "Home", null, null, homeWindow);
-  titlebar.appendChild(homeButton);
+      var reloadButton = this.creator.createButton(this._name + "-reload-button",
+        "&#8635;", "Reload", null, null, this._browser.reload.bind(this._browser));
+      titlebar.appendChild(reloadButton);
 
-  var closeButton = createButton(titlebar_name + "-close-button",
-    titlebar_name + "-close-button",
-    "", "Close",
-    "assets/button_close.png",
-    "assets/button_close_hover.png",
-    closeWindow);
-  titlebar.appendChild(closeButton);
+      var homeButton = this.creator.createButton(this._name + "-home-button",
+        "&#8962;", "Home", null, null, this._browser.home.bind(this._browser));
+      titlebar.appendChild(homeButton);
+    }
 
-  var divider = document.createElement("div");
-  divider.setAttribute("class", titlebar_name + "-divider");
-  titlebar.appendChild(divider);
+    var divider = document.createElement("div");
+    divider.setAttribute("class", this._name + "-divider");
+    titlebar.appendChild(divider);
 
-  document.body.appendChild(titlebar);
-}
+    document.body.appendChild(titlebar);
 
-function removeTitlebar(titlebar_name) {
-  var titlebar = document.getElementById(titlebar_name);
-  if (titlebar)
-    document.body.removeChild(titlebar);
-}
+    this.onfocus = (function () {
+      this.focus(true);
+    }).bind(this);
+    global.addEventListener("focus", this.onfocus);
+    this.onblur = (function () {
+      this.focus(false);
+    }).bind(this);
+    global.addEventListener("blur", this.onblur);
+    this.onresize = this.updateContentStyle.bind(this);
+    global.addEventListener("resize", this.onresize);
 
-function updateContentStyle() {
-  var content = document.getElementById("content");
-  if (!content)
-    return;
+    this.updateContentStyle();
+  };
 
-  var left = 0;
-  var top = 0;
-  var width = window.outerWidth;
-  var height = window.outerHeight;
+  TitleBar.prototype.remove = function removeTitlebar() {
+    var document = global.document;
+    var titlebar = document.getElementById(this._name);
+    if (titlebar) {
+      document.body.removeChild(titlebar);
+      if (this.onfocus) global.removeEventListener("focus", this.onfocus);
+      if (this.onblur) global.removeEventListener("blur", this.onblur);
+      if (this.onresize) global.removeEventListener("resize", this.onresize);
+      this.resetContentStyle();
+    }
+  };
 
-  var titlebar = document.getElementById("left-titlebar");
-  if (titlebar) {
-    width -= titlebar.offsetWidth;
-    left += titlebar.offsetWidth;
-  }
+  TitleBar.prototype.resetContentStyle = function resetContentStyle() {
+    var document = global.document;
+    var content = document.getElementById("content");
+    if (!content)
+      return;
+    content.setAttribute("style", "");
+  };
 
-  var contentStyle = "position: absolute; ";
-  contentStyle += "left: " + left + "px; ";
-  contentStyle += "top: " + top + "px; ";
-  contentStyle += "width: " + width + "px; ";
-  contentStyle += "height: " + height + "px; ";
-  content.setAttribute("style", contentStyle);
-}
+  TitleBar.prototype.updateContentStyle = function updateContentStyle() {
+    if (this.callUpdateContent) clearTimeout(this.callUpdateContent);
+    this.callUpdateContent = setTimeout((function () {
+      var document = global.document;
+      var content = document.getElementById("content");
+      if (!content)
+        return;
+
+      var titlebar = document.getElementById(this._name);
+      if (titlebar) {
+        var left = 0;
+        var top = 0;
+        var width = global.outerWidth;
+        var height = global.outerHeight;
+
+        switch (this._position) {
+        case "top":
+          height -= titlebar.offsetHeight;
+          top += titlebar.offsetHeight;
+          break;
+        case "bottom":
+          height -= titlebar.offsetHeight;
+          break;
+        case "left":
+          width -= titlebar.offsetWidth;
+          left += titlebar.offsetWidth;
+          break;
+        case "right":
+          width -= titlebar.offsetWidth;
+          break;
+        default:
+          return;
+        }
+
+        var contentStyle = "position: absolute; ";
+        contentStyle += "left: " + left + "px; ";
+        contentStyle += "top: " + top + "px; ";
+        contentStyle += "width: " + width + "px; ";
+        contentStyle += "height: " + height + "px; ";
+        content.setAttribute("style", contentStyle);
+      }
+    }).bind(this), 100);
+  };
+})(window);

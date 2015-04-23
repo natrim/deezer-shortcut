@@ -1,0 +1,427 @@
+html {
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+}
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Helvetica Neue', 'Lucida Grande', sans-serif;
+    font-size: 75%;
+    color: #C2C2CA;
+}
+#content {
+    background-color: #dddddd;
+    margin: 0px;
+    padding: 0px;
+}
+::-webkit-scrollbar-thumb {
+    display: none;
+}
+.top-titlebar {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 26px;
+    background-color: #23232C;
+    -webkit-app-region: drag;
+}
+.bottom-titlebar {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 26px;
+    background-color: #23232C;
+    -webkit-app-region: drag;
+}
+.right-titlebar {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 26px;
+    height: 100%;
+    background-color: #23232C;
+    -webkit-app-region: drag;
+}
+.left-titlebar {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 26px;
+    height: 100%;
+    background-color: #23232C;
+    -webkit-app-region: drag;
+}
+.top-titlebar-icon {
+    position: absolute;
+    left: 6px;
+    margin-top: 4px;
+    margin-bottom: 6px;
+}
+.bottom-titlebar-icon {
+    position: absolute;
+    left: 6px;
+    margin-top: 6px;
+    margin-bottom: 4px;
+}
+.right-titlebar-icon {
+    position: absolute;
+    top: 6px;
+    margin-left: 4px;
+    margin-right: 6px;
+}
+.left-titlebar-icon {
+    position: absolute;
+    bottom: 6px;
+    margin-left: 4px;
+    margin-right: 6px;
+}
+.top-titlebar-text {
+    position: absolute;
+    white-space: nowrap;
+    left: 25px;
+    width: 80%;
+    margin-top: 4px;
+    margin-bottom: 6px;
+    font-style: Arial;
+    font-size: 12pt;
+}
+.bottom-titlebar-text {
+    position: absolute;
+    white-space: nowrap;
+    left: 25px;
+    width: 80%;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    font-style: Arial;
+    font-size: 12pt;
+}
+.right-titlebar-text {
+    position: absolute;
+    white-space: nowrap;
+    top: 0px;
+    width: 100px;
+    margin-left: 4px;
+    margin-right: 6px;
+    font-style: Arial;
+    font-size: 12pt;
+    -webkit-transform: rotate(90deg) translate(0, 100%);
+    -webkit-transform-origin: 0% 200%;
+}
+.left-titlebar-text {
+    position: absolute;
+    white-space: nowrap;
+    bottom: 25px;
+    width: 100px;
+    margin-left: 4px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    font-style: Arial;
+    font-size: 12pt;
+    -webkit-transform: rotate(-90deg) translate(0, 100%);
+    -webkit-transform-origin: 0% 100%;
+}
+.top-titlebar-close-button {
+    position: absolute;
+    right: 11px;
+    width: 17px;
+    height: 17px;
+    margin-top: 4px;
+    margin-bottom: 6px;
+    cursor: hand;
+    -webkit-app-region: no-drag;
+}
+.bottom-titlebar-close-button {
+    position: absolute;
+    right: 11px;
+    width: 17px;
+    height: 17px;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    cursor: hand;
+    -webkit-app-region: no-drag;
+}
+.right-titlebar-close-button {
+    position: absolute;
+    bottom: 11px;
+    width: 17px;
+    height: 17px;
+    margin-left: 4px;
+    margin-right: 6px;
+    cursor: hand;
+    -webkit-app-region: no-drag;
+}
+.left-titlebar-close-button {
+    position: absolute;
+    top: 11px;
+    width: 17px;
+    height: 17px;
+    margin-left: 4px;
+    margin-right: 6px;
+    cursor: hand;
+    -webkit-app-region: no-drag;
+}
+.top-titlebar-minimize-button {
+    position: absolute;
+    right: 28px;
+    width: 17px;
+    height: 17px;
+    margin-top: 4px;
+    margin-bottom: 6px;
+    cursor: hand;
+    font-size: 12pt;
+    font-weight: bold;
+    -webkit-app-region: no-drag;
+}
+.bottom-titlebar-minimize-button {
+    position: absolute;
+    right: 28px;
+    width: 17px;
+    height: 17px;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    cursor: hand;
+    font-size: 12pt;
+    font-weight: bold;
+    -webkit-app-region: no-drag;
+}
+.right-titlebar-minimize-button {
+    position: absolute;
+    bottom: 28px;
+    width: 17px;
+    height: 17px;
+    margin-left: 4px;
+    margin-right: 6px;
+    cursor: hand;
+    font-size: 12pt;
+    font-weight: bold;
+    -webkit-app-region: no-drag;
+}
+.left-titlebar-minimize-button {
+    position: absolute;
+    top: 28px;
+    width: 17px;
+    height: 17px;
+    margin-left: 4px;
+    margin-right: 6px;
+    cursor: hand;
+    font-size: 12pt;
+    font-weight: bold;
+    -webkit-app-region: no-drag;
+}
+.top-titlebar-back-button {
+    position: absolute;
+    right: 75px;
+    width: 17px;
+    height: 17px;
+    margin-top: 4px;
+    margin-bottom: 6px;
+    cursor: hand;
+    font-size: 12pt;
+    -webkit-app-region: no-drag;
+}
+.bottom-titlebar-back-button {
+    position: absolute;
+    right: 75px;
+    width: 17px;
+    height: 17px;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    cursor: hand;
+    font-size: 12pt;
+    -webkit-app-region: no-drag;
+}
+.right-titlebar-back-button {
+    position: absolute;
+    bottom: 75px;
+    width: 17px;
+    height: 17px;
+    margin-left: 4px;
+    margin-right: 6px;
+    cursor: hand;
+    font-size: 12pt;
+    -webkit-app-region: no-drag;
+}
+.left-titlebar-back-button {
+    position: absolute;
+    top: 55px;
+    width: 17px;
+    height: 17px;
+    margin-left: 4px;
+    margin-right: 6px;
+    cursor: hand;
+    font-size: 12pt;
+    -webkit-app-region: no-drag;
+}
+.top-titlebar-forward-button {
+    position: absolute;
+    right: 55px;
+    width: 17px;
+    height: 17px;
+    margin-top: 5px;
+    margin-bottom: 6px;
+    cursor: hand;
+    font-size: 11pt;
+    -webkit-app-region: no-drag;
+}
+.bottom-titlebar-forward-button {
+    position: absolute;
+    right: 55px;
+    width: 17px;
+    height: 17px;
+    margin-top: 6px;
+    margin-bottom: 5px;
+    cursor: hand;
+    font-size: 11pt;
+    -webkit-app-region: no-drag;
+}
+.right-titlebar-forward-button {
+    position: absolute;
+    bottom: 55px;
+    width: 17px;
+    height: 17px;
+    margin-left: 5px;
+    margin-right: 6px;
+    cursor: hand;
+    font-size: 11pt;
+    -webkit-app-region: no-drag;
+}
+.left-titlebar-forward-button {
+    position: absolute;
+    top: 75px;
+    width: 17px;
+    height: 17px;
+    margin-left: 6px;
+    margin-right: 6px;
+    cursor: hand;
+    font-size: 11pt;
+    -webkit-app-region: no-drag;
+}
+.top-titlebar-reload-button {
+    position: absolute;
+    right: 95px;
+    width: 17px;
+    height: 17px;
+    margin-top: 4px;
+    margin-bottom: 6px;
+    cursor: hand;
+    font-size: 12pt;
+    -webkit-app-region: no-drag;
+}
+.bottom-titlebar-reload-button {
+    position: absolute;
+    right: 95px;
+    width: 17px;
+    height: 17px;
+    margin-top: 4px;
+    margin-bottom: 6px;
+    cursor: hand;
+    font-size: 12pt;
+    -webkit-app-region: no-drag;
+}
+.right-titlebar-reload-button {
+    position: absolute;
+    bottom: 95px;
+    width: 17px;
+    height: 17px;
+    margin-left: 5px;
+    margin-right: 6px;
+    cursor: hand;
+    font-size: 12pt;
+    -webkit-app-region: no-drag;
+}
+.left-titlebar-reload-button {
+    position: absolute;
+    top: 95px;
+    width: 17px;
+    height: 17px;
+    margin-left: 4px;
+    margin-right: 6px;
+    cursor: hand;
+    font-size: 12pt;
+    -webkit-app-region: no-drag;
+}
+.top-titlebar-home-button {
+    position: absolute;
+    right: 115px;
+    width: 17px;
+    height: 17px;
+    margin-top: 0px;
+    margin-bottom: 6px;
+    cursor: hand;
+    font-size: 18pt;
+    -webkit-app-region: no-drag;
+}
+.bottom-titlebar-home-button {
+    position: absolute;
+    right: 115px;
+    width: 17px;
+    height: 17px;
+    margin-top: 0px;
+    margin-bottom: 4px;
+    cursor: hand;
+    font-size: 18pt;
+    -webkit-app-region: no-drag;
+}
+.right-titlebar-home-button {
+    position: absolute;
+    bottom: 119px;
+    width: 17px;
+    height: 17px;
+    margin-left: 4px;
+    margin-right: 6px;
+    cursor: hand;
+    font-size: 18pt;
+    -webkit-app-region: no-drag;
+}
+.left-titlebar-home-button {
+    position: absolute;
+    top: 115px;
+    width: 17px;
+    height: 17px;
+    margin-left: 4px;
+    margin-right: 6px;
+    cursor: hand;
+    font-size: 18pt;
+    -webkit-app-region: no-drag;
+}
+.top-titlebar-minimize-button:hover, .top-titlebar-back-button:hover, .top-titlebar-forward-button:hover, .top-titlebar-reload-button:hover, .top-titlebar-home-button:hover,
+.bottom-titlebar-minimize-button:hover, .bottom-titlebar-back-button:hover, .bottom-titlebar-forward-button:hover, .bottom-titlebar-reload-button:hover, .bottom-titlebar-home-button:hover,
+.right-titlebar-minimize-button:hover, .right-titlebar-back-button:hover, .right-titlebar-forward-button:hover, .right-titlebar-reload-button:hover, .right-titlebar-home-button:hover,
+.left-titlebar-minimize-button:hover, .left-titlebar-back-button:hover, .left-titlebar-forward-button:hover, .left-titlebar-reload-button:hover, .left-titlebar-home-button:hover {
+    color: #fff;
+}
+.top-titlebar-divider {
+    position: absolute;
+    left: 0px;
+    top: 26px;
+    width: 100%;
+    height: 1px;
+    background-color: #777;
+}
+.bottom-titlebar-divider {
+    position: absolute;
+    left: 0px;
+    bottom: 26px;
+    width: 100%;
+    height: 1px;
+    background-color: #777;
+}
+.right-titlebar-divider {
+    position: absolute;
+    right: 26px;
+    top: 0px;
+    width: 1px;
+    height: 100%;
+    background-color: #777;
+}
+.left-titlebar-divider {
+    position: absolute;
+    left: 26px;
+    top: 0px;
+    width: 1px;
+    height: 100%;
+    background-color: #777;
+}

@@ -3,18 +3,21 @@
         <meta charset="utf-8" />
         <title>Deezer Shortcut</title>
         <script src="assets/titlebar.js"></script>
+        <link rel="stylesheet" href="assets/titlebar.css" />
         <script src="assets/app.js"></script>
         <link rel="stylesheet" href="assets/style.css" />
     </head>
     <body>
-        <webview id="deezerview" src="http://www.deezer.com/" partition="persist:deezershortcurt" allowtransparency="on"></webview>
-        <dialog id="dialog">
-        <h1 id="dialog-title">Dialog Title</h1>
-        <div>
-            <p id="dialog-content">Dialog content</p>
-            <button id="dialog-ok">OK</button>
-            <button id="dialog-cancel">Cancel</button>
+        <div id="content">
+            <webview id="deezerview" src="http://www.deezer.com/" partition="persist:deezershortcurt" allowtransparency="on"></webview>
+            <dialog id="dialog">
+            <h1 id="dialog-title">Dialog Title</h1>
+            <div>
+                <p id="dialog-content">Dialog content</p>
+                <button id="dialog-ok">OK</button>
+                <button id="dialog-cancel">Cancel</button>
+            </div>
+            </dialog>
         </div>
-        </dialog>
     </body>
 </html>

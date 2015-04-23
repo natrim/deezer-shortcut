@@ -1,19 +1,8 @@
 var viewIsLoaded = false;
-
-window.onfocus = function () {
-	focusTitlebars(true);
-};
-
-window.onblur = function () {
-	focusTitlebars(false);
-};
-
-window.onresize = function () {
-	updateContentStyle();
-};
-
 window.onload = function () {
-	addTitlebar("left-titlebar", "assets/icon_16.png", "Deezer Shortcut");
+	var browserControl = new BrowserControl('#deezerview', 'http://www.deezer.com/');
+	var titlebar = new TitleBar('left', browserControl);
+	titlebar.add('assets/icon_16.png', 'Deezer Shortcut');
 
 	var isLoaded = false;
 	var loading = setTimeout(function () {
