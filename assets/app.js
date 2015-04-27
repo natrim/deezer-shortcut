@@ -19,11 +19,29 @@ window.onload = function () {
 			isLoaded = true;
 		}
 	});
+	webview.addEventListener('permissionrequest', function (e) {
+		if (e.permission === 'download') {
+			if (e.url.search('deezer.com') !== -1) {
+				e.request.allow();
+			}
+		} else if (e.permission === 'fullscreen') {
+			e.request.allow();
+		} else if (e.permission === 'loadplugin') {
+			if (e.request.identifier === 'adobe-flash-player') {
+				e.request.allow();
+			}
+		}
+	});
 	webview.addEventListener('loadstart', function () {
 		viewIsLoaded = false;
 	});
 	webview.addEventListener('loadstop', function () {
 		viewIsLoaded = true;
+	});
+	webview.addEventListener('loadabort', function (e) { //open deezer app in chrome
+		if (e.reason === 'ERR_UNKNOWN_URL_SCHEME' && e.url.search('dzr://') !== -1) {
+			window.open(e.url);
+		}
 	});
 	webview.addEventListener('newwindow', function (e) {
 		e.preventDefault();
