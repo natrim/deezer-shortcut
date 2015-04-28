@@ -30,16 +30,32 @@
     return this;
   };
 
-  global.TitleBar = function TitleBar(position, browser) {
+  global.TitleBar = function TitleBar(position, allowChangingPosition, browser) {
     this._name = position + "-titlebar";
     if (position !== "left" && position !== "right" && position !== "top" && position !== "bottom") throw "wrong position!";
     this._position = position;
+    this.allowChangingPosition = allowChangingPosition;
     if (!global.document.getElementById("content")) throw "you need to have all things wrapped inside <div id=\"content\" />!";
     this._browser = browser;
   };
 
-  TitleBar.prototype.closeWindow = function closeWindow() {
-    global.chrome.app.window.current().close();
+  TitleBar.prototype.closeWindow = function closeWindow(e) {
+    if (e.altKey && this.allowChangingPosition) { //change titlebar position
+      this.remove();
+      if (this._position === 'left') {
+        this._position = 'top';
+      } else if (this._position === 'top') {
+        this._position = 'right';
+      } else if (this._position === 'right') {
+        this._position = 'bottom';
+      } else {
+        this._position = 'left';
+      }
+      this._name = this._position + "-titlebar";
+      this.add(this.__icon, this.__text);
+    } else { //close
+      global.chrome.app.window.current().close();
+    }
     return this;
   };
 
@@ -100,6 +116,8 @@
   };
 
   TitleBar.prototype.add = function addTitlebar(titlebar_icon_url, titlebar_text) {
+    this.__icon = titlebar_icon_url;
+    this.__text = titlebar_text;
     var document = global.document;
     var titlebar = document.createElement("div");
     titlebar.setAttribute("id", this._name);
@@ -116,7 +134,7 @@
     titlebar.appendChild(title);
 
     var closeButton = this.creator.createButton(this._name + "-button titlebar-close-button",
-      "", "Close", null, null, this.closeWindow.bind(this));
+      "", "Close" + (this.allowChangingPosition ? "\n\n(Alt+click changes position)" : ""), null, null, this.closeWindow.bind(this));
     titlebar.appendChild(closeButton);
 
     var minimizeButton = this.creator.createButton(this._name + "-button titlebar-minimize-button",
