@@ -67,7 +67,7 @@
   TitleBar.prototype.creator.createButton = function createButton(button_name, buttonText, titleText, normal_image_url,
     hover_image_url, click_func) {
     var button = global.document.createElement("div");
-    button.setAttribute("class", button_name);
+    button.setAttribute("class", "titlebar-button " + button_name);
     if (normal_image_url) {
       var button_img = this.createImage(button_name + "-image", normal_image_url);
       button.appendChild(button_img);
@@ -115,29 +115,29 @@
     title.innerText = titlebar_text;
     titlebar.appendChild(title);
 
-    var closeButton = this.creator.createButton(this._name + "-close-button",
-      "", "Close", "assets/button_close.png", "assets/button_close_hover.png", this.closeWindow.bind(this));
+    var closeButton = this.creator.createButton(this._name + "-button titlebar-close-button",
+      "", "Close", null, null, this.closeWindow.bind(this));
     titlebar.appendChild(closeButton);
 
-    var minimizeButton = this.creator.createButton(this._name + "-minimize-button",
-      "&#8212;", "Minimize", null, null, this.minimizeWindow.bind(this));
+    var minimizeButton = this.creator.createButton(this._name + "-button titlebar-minimize-button",
+      "", "Minimize", null, null, this.minimizeWindow.bind(this));
     titlebar.appendChild(minimizeButton);
 
     if (this._browser) {
-      var backButton = this.creator.createButton(this._name + "-back-button",
-        "&#9664;", "Back", null, null, this._browser.back.bind(this._browser));
+      var backButton = this.creator.createButton(this._name + "-button titlebar-back-button",
+        "", "Back", null, null, this._browser.back.bind(this._browser));
       titlebar.appendChild(backButton);
 
-      var forwardButton = this.creator.createButton(this._name + "-forward-button",
-        "&#9654;", "Forward", null, null, this._browser.forward.bind(this._browser));
+      var forwardButton = this.creator.createButton(this._name + "-button titlebar-forward-button",
+        "", "Forward", null, null, this._browser.forward.bind(this._browser));
       titlebar.appendChild(forwardButton);
 
-      var reloadButton = this.creator.createButton(this._name + "-reload-button",
-        "&#8635;", "Reload", null, null, this._browser.reload.bind(this._browser));
+      var reloadButton = this.creator.createButton(this._name + "-button titlebar-reload-button",
+        "", "Reload", null, null, this._browser.reload.bind(this._browser));
       titlebar.appendChild(reloadButton);
 
-      var homeButton = this.creator.createButton(this._name + "-home-button",
-        "&#8962;", "Home", null, null, this._browser.home.bind(this._browser));
+      var homeButton = this.creator.createButton(this._name + "-button titlebar-home-button",
+        "", "Home", null, null, this._browser.home.bind(this._browser));
       titlebar.appendChild(homeButton);
     }
 

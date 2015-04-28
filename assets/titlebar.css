@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('fontawesome-webfont.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 html {
     margin: 0px;
     padding: 0px;
@@ -8,7 +14,6 @@ body {
     padding: 0px;
     font-family: 'Helvetica Neue', 'Lucida Grande', sans-serif;
     font-size: 75%;
-    color: #C2C2CA;
 }
 #content {
     background-color: #dddddd;
@@ -54,17 +59,11 @@ body {
     background-color: #23232C;
     -webkit-app-region: drag;
 }
-.top-titlebar-icon {
+.top-titlebar-icon, .bottom-titlebar-icon {
     position: absolute;
     left: 6px;
-    margin-top: 4px;
-    margin-bottom: 6px;
-}
-.bottom-titlebar-icon {
-    position: absolute;
-    left: 6px;
-    margin-top: 6px;
-    margin-bottom: 4px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .right-titlebar-icon {
     position: absolute;
@@ -75,10 +74,10 @@ body {
 .left-titlebar-icon {
     position: absolute;
     bottom: 6px;
-    margin-left: 4px;
-    margin-right: 6px;
+    margin-left: 6px;
+    margin-right: 4px;
 }
-.top-titlebar-text {
+.top-titlebar-text, .bottom-titlebar-text {
     position: absolute;
     white-space: nowrap;
     left: 25px;
@@ -86,16 +85,7 @@ body {
     margin-top: 4px;
     margin-bottom: 6px;
     font-style: Arial;
-    font-size: 12pt;
-}
-.bottom-titlebar-text {
-    position: absolute;
-    white-space: nowrap;
-    left: 25px;
-    width: 80%;
-    margin-top: 6px;
-    margin-bottom: 4px;
-    font-style: Arial;
+    color: #C2C2CA;
     font-size: 12pt;
 }
 .right-titlebar-text {
@@ -106,6 +96,7 @@ body {
     margin-left: 4px;
     margin-right: 6px;
     font-style: Arial;
+    color: #C2C2CA;
     font-size: 12pt;
     -webkit-transform: rotate(90deg) translate(0, 100%);
     -webkit-transform-origin: 0% 200%;
@@ -115,283 +106,141 @@ body {
     white-space: nowrap;
     bottom: 25px;
     width: 100px;
-    margin-left: 4px;
-    margin-right: 6px;
+    margin-left: 5px;
+    margin-right: 5px;
     margin-bottom: 6px;
     font-style: Arial;
+    color: #C2C2CA;
     font-size: 12pt;
     -webkit-transform: rotate(-90deg) translate(0, 100%);
     -webkit-transform-origin: 0% 100%;
 }
-.top-titlebar-close-button {
+.titlebar-button {
     position: absolute;
-    right: 11px;
+    color: #C2C2CA;
     width: 17px;
     height: 17px;
-    margin-top: 4px;
-    margin-bottom: 6px;
     cursor: hand;
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 1.33333333em;
+    line-height: 0.75em;
+    vertical-align: -15%;
+    text-rendering: auto;
+    transform: translate(0, 0);
+    -webkit-font-smoothing: antialiased;
     -webkit-app-region: no-drag;
 }
-.bottom-titlebar-close-button {
-    position: absolute;
-    right: 11px;
-    width: 17px;
-    height: 17px;
-    margin-top: 6px;
-    margin-bottom: 4px;
-    cursor: hand;
-    -webkit-app-region: no-drag;
-}
-.right-titlebar-close-button {
-    position: absolute;
-    bottom: 11px;
-    width: 17px;
-    height: 17px;
-    margin-left: 4px;
-    margin-right: 6px;
-    cursor: hand;
-    -webkit-app-region: no-drag;
-}
-.left-titlebar-close-button {
-    position: absolute;
-    top: 11px;
-    width: 17px;
-    height: 17px;
-    margin-left: 4px;
-    margin-right: 6px;
-    cursor: hand;
-    -webkit-app-region: no-drag;
-}
-.top-titlebar-minimize-button {
-    position: absolute;
-    right: 28px;
-    width: 17px;
-    height: 17px;
-    margin-top: 4px;
-    margin-bottom: 6px;
-    cursor: hand;
-    font-size: 12pt;
-    font-weight: bold;
-    -webkit-app-region: no-drag;
-}
-.bottom-titlebar-minimize-button {
-    position: absolute;
-    right: 28px;
-    width: 17px;
-    height: 17px;
-    margin-top: 6px;
-    margin-bottom: 4px;
-    cursor: hand;
-    font-size: 12pt;
-    font-weight: bold;
-    -webkit-app-region: no-drag;
-}
-.right-titlebar-minimize-button {
-    position: absolute;
-    bottom: 28px;
-    width: 17px;
-    height: 17px;
-    margin-left: 4px;
-    margin-right: 6px;
-    cursor: hand;
-    font-size: 12pt;
-    font-weight: bold;
-    -webkit-app-region: no-drag;
-}
-.left-titlebar-minimize-button {
-    position: absolute;
-    top: 28px;
-    width: 17px;
-    height: 17px;
-    margin-left: 4px;
-    margin-right: 6px;
-    cursor: hand;
-    font-size: 12pt;
-    font-weight: bold;
-    -webkit-app-region: no-drag;
-}
-.top-titlebar-back-button {
-    position: absolute;
-    right: 75px;
-    width: 17px;
-    height: 17px;
-    margin-top: 4px;
-    margin-bottom: 6px;
-    cursor: hand;
-    font-size: 12pt;
-    -webkit-app-region: no-drag;
-}
-.bottom-titlebar-back-button {
-    position: absolute;
-    right: 75px;
-    width: 17px;
-    height: 17px;
-    margin-top: 6px;
-    margin-bottom: 4px;
-    cursor: hand;
-    font-size: 12pt;
-    -webkit-app-region: no-drag;
-}
-.right-titlebar-back-button {
-    position: absolute;
-    bottom: 75px;
-    width: 17px;
-    height: 17px;
-    margin-left: 4px;
-    margin-right: 6px;
-    cursor: hand;
-    font-size: 12pt;
-    -webkit-app-region: no-drag;
-}
-.left-titlebar-back-button {
-    position: absolute;
-    top: 55px;
-    width: 17px;
-    height: 17px;
-    margin-left: 4px;
-    margin-right: 6px;
-    cursor: hand;
-    font-size: 12pt;
-    -webkit-app-region: no-drag;
-}
-.top-titlebar-forward-button {
-    position: absolute;
-    right: 55px;
-    width: 17px;
-    height: 17px;
-    margin-top: 5px;
-    margin-bottom: 6px;
-    cursor: hand;
-    font-size: 11pt;
-    -webkit-app-region: no-drag;
-}
-.bottom-titlebar-forward-button {
-    position: absolute;
-    right: 55px;
-    width: 17px;
-    height: 17px;
-    margin-top: 6px;
-    margin-bottom: 5px;
-    cursor: hand;
-    font-size: 11pt;
-    -webkit-app-region: no-drag;
-}
-.right-titlebar-forward-button {
-    position: absolute;
-    bottom: 55px;
-    width: 17px;
-    height: 17px;
-    margin-left: 5px;
-    margin-right: 6px;
-    cursor: hand;
-    font-size: 11pt;
-    -webkit-app-region: no-drag;
-}
-.left-titlebar-forward-button {
-    position: absolute;
-    top: 75px;
-    width: 17px;
-    height: 17px;
-    margin-left: 6px;
-    margin-right: 6px;
-    cursor: hand;
-    font-size: 11pt;
-    -webkit-app-region: no-drag;
-}
-.top-titlebar-reload-button {
-    position: absolute;
-    right: 95px;
-    width: 17px;
-    height: 17px;
-    margin-top: 5px;
-    margin-bottom: 6px;
-    cursor: hand;
-    font-size: 12pt;
-    -webkit-app-region: no-drag;
-}
-.bottom-titlebar-reload-button {
-    position: absolute;
-    right: 95px;
-    width: 17px;
-    height: 17px;
-    margin-top: 5px;
-    margin-bottom: 6px;
-    cursor: hand;
-    font-size: 12pt;
-    -webkit-app-region: no-drag;
-}
-.right-titlebar-reload-button {
-    position: absolute;
-    bottom: 95px;
-    width: 17px;
-    height: 17px;
-    margin-left: 5px;
-    margin-right: 6px;
-    cursor: hand;
-    font-size: 12pt;
-    -webkit-app-region: no-drag;
-}
-.left-titlebar-reload-button {
-    position: absolute;
-    top: 95px;
-    width: 17px;
-    height: 17px;
-    margin-left: 5px;
-    margin-right: 6px;
-    cursor: hand;
-    font-size: 12pt;
-    -webkit-app-region: no-drag;
-}
-.top-titlebar-home-button {
-    position: absolute;
-    right: 115px;
-    width: 17px;
-    height: 17px;
-    margin-top: 0px;
-    margin-bottom: 6px;
-    cursor: hand;
-    font-size: 18pt;
-    -webkit-app-region: no-drag;
-}
-.bottom-titlebar-home-button {
-    position: absolute;
-    right: 115px;
-    width: 17px;
-    height: 17px;
-    margin-top: 0px;
-    margin-bottom: 4px;
-    cursor: hand;
-    font-size: 18pt;
-    -webkit-app-region: no-drag;
-}
-.right-titlebar-home-button {
-    position: absolute;
-    bottom: 119px;
-    width: 17px;
-    height: 17px;
-    margin-left: 4px;
-    margin-right: 6px;
-    cursor: hand;
-    font-size: 18pt;
-    -webkit-app-region: no-drag;
-}
-.left-titlebar-home-button {
-    position: absolute;
-    top: 115px;
-    width: 17px;
-    height: 17px;
-    margin-left: 4px;
-    margin-right: 6px;
-    cursor: hand;
-    font-size: 18pt;
-    -webkit-app-region: no-drag;
-}
-.top-titlebar-minimize-button:hover, .top-titlebar-back-button:hover, .top-titlebar-forward-button:hover, .top-titlebar-reload-button:hover, .top-titlebar-home-button:hover,
-.bottom-titlebar-minimize-button:hover, .bottom-titlebar-back-button:hover, .bottom-titlebar-forward-button:hover, .bottom-titlebar-reload-button:hover, .bottom-titlebar-home-button:hover,
-.right-titlebar-minimize-button:hover, .right-titlebar-back-button:hover, .right-titlebar-forward-button:hover, .right-titlebar-reload-button:hover, .right-titlebar-home-button:hover,
-.left-titlebar-minimize-button:hover, .left-titlebar-back-button:hover, .left-titlebar-forward-button:hover, .left-titlebar-reload-button:hover, .left-titlebar-home-button:hover {
+.titlebar-button:hover {
     color: #fff;
+}
+.titlebar-close-button:before {
+    content: "\f00d";
+}
+.titlebar-minimize-button:before {
+    content: "\f068";
+}
+.titlebar-back-button:before {
+    content: "\f053";
+}
+.titlebar-forward-button:before {
+    content: "\f054";
+}
+.titlebar-reload-button:before {
+    content: "\f021";
+}
+.titlebar-home-button:before {
+    content: "\f015";
+}
+.top-titlebar-button.titlebar-close-button, .bottom-titlebar-button.titlebar-close-button {
+    right: 9px;
+    margin-top: 6px;
+    margin-bottom: 4px;
+}
+.right-titlebar-button.titlebar-close-button {
+    bottom: 9px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.left-titlebar-button.titlebar-close-button {
+    top: 9px;
+    margin-left: 6px;
+    margin-right: 4px;
+}
+.top-titlebar-button.titlebar-minimize-button, .bottom-titlebar-button.titlebar-minimize-button {
+    right: 28px;
+    margin-top: 8px;
+    margin-bottom: 2px;
+}
+.right-titlebar-button.titlebar-minimize-button {
+    bottom: 28px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.left-titlebar-button.titlebar-minimize-button {
+    top: 28px;
+    margin-left: 6px;
+    margin-right: 4px;
+}
+.top-titlebar-button.titlebar-back-button, .bottom-titlebar-button.titlebar-back-button {
+    right: 76px;
+    margin-top: 7px;
+    margin-bottom: 3px;
+}
+.right-titlebar-button.titlebar-back-button {
+    bottom: 76px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.left-titlebar-button.titlebar-back-button {
+    top: 57px;
+    margin-left: 6px;
+    margin-right: 4px;
+}
+.top-titlebar-button.titlebar-forward-button, .bottom-titlebar-button.titlebar-forward-button {
+    right: 57px;
+    margin-top: 7px;
+    margin-bottom: 3px;
+}
+.right-titlebar-button.titlebar-forward-button {
+    bottom: 57px;
+    margin-left: 6px;
+    margin-right: 4px;
+}
+.left-titlebar-button.titlebar-forward-button {
+    top: 76px;
+    margin-left: 7px;
+    margin-right: 3px;
+}
+.top-titlebar-button.titlebar-reload-button, .bottom-titlebar-button.titlebar-reload-button {
+    right: 95px;
+    margin-top: 7px;
+    margin-bottom: 3px;
+}
+.right-titlebar-button.titlebar-reload-button {
+    bottom: 95px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.left-titlebar-button.titlebar-reload-button {
+    top: 95px;
+    margin-left: 6px;
+    margin-right: 4px;
+}
+.top-titlebar-button.titlebar-home-button, .bottom-titlebar-button.titlebar-home-button {
+    right: 114px;
+    margin-top: 7px;
+    margin-bottom: 3px;
+}
+.right-titlebar-button.titlebar-home-button {
+    bottom: 114px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.left-titlebar-button.titlebar-home-button {
+    top: 114px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 .top-titlebar-divider {
     position: absolute;
