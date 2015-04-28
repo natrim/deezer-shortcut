@@ -59,8 +59,16 @@
     return this;
   };
 
-  TitleBar.prototype.minimizeWindow = function minimizeWindow() {
-    global.chrome.app.window.current().minimize();
+  TitleBar.prototype.minimizeWindow = function minimizeWindow(e) {
+    var window = global.chrome.app.window.current();
+    if (window.isMinimized() || window.isMaximized()) {
+      window.restore();
+    } else if (e.altKey)  {
+      window.maximize();
+    } else {
+      window.minimize();
+    }
+    
     return this;
   };
 
@@ -134,11 +142,11 @@
     titlebar.appendChild(title);
 
     var closeButton = this.creator.createButton(this._name + "-button titlebar-close-button",
-      "", "Close" + (this.allowChangingPosition ? "\n\n(Alt+click changes position)" : ""), null, null, this.closeWindow.bind(this));
+      "", "Close" + (this.allowChangingPosition ? "\n\n(Alt+click changes titlebar position)" : ""), null, null, this.closeWindow.bind(this));
     titlebar.appendChild(closeButton);
 
     var minimizeButton = this.creator.createButton(this._name + "-button titlebar-minimize-button",
-      "", "Minimize", null, null, this.minimizeWindow.bind(this));
+      "", "Minimize" + "\n\n(Alt+click maximizes window)", null, null, this.minimizeWindow.bind(this));
     titlebar.appendChild(minimizeButton);
 
     if (this._browser) {
