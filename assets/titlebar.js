@@ -54,7 +54,7 @@
       this._name = this._position + "-titlebar";
       this.add(this.__icon, this.__text);
       this.buttons.closeButton.title = "Change titlebar position";
-      this.buttons.closeButton.className += " position"; 
+      this.buttons.closeButton.className += " position";
     } else { //close
       global.chrome.app.window.current().close();
     }
@@ -65,12 +65,12 @@
     var window = global.chrome.app.window.current();
     if (window.isMinimized() || window.isMaximized()) {
       window.restore();
-    } else if (e.altKey)  {
+    } else if (e.altKey) {
       window.maximize();
     } else {
       window.minimize();
     }
-    
+
     return this;
   };
 
@@ -128,7 +128,7 @@
   TitleBar.prototype.add = function addTitlebar(titlebar_icon_url, titlebar_text) {
     this.__icon = titlebar_icon_url;
     this.__text = titlebar_text;
-    this.buttons = { };
+    this.buttons = {};
     var document = global.document;
     var titlebar = document.createElement("div");
     titlebar.setAttribute("id", this._name);
@@ -154,20 +154,20 @@
     var minimizeTitle = "Minimize";
     var minimizeChangeTitle = "\n\n(Alt+click maximizes window)";
     var minimizeButton = this.creator.createButton(this._name + "-button titlebar-minimize-button",
-      "", minimizeTitle + minimizeChangeTitle , null, null, this.minimizeWindow.bind(this));
+      "", minimizeTitle + minimizeChangeTitle, null, null, this.minimizeWindow.bind(this));
     titlebar.appendChild(minimizeButton);
     this.buttons.minimizeButton = minimizeButton;
-    
+
     this.__MonitorAltKey = (function MonitorAltKey(e) {
-      if (!e) e=window.event;
-    
+      if (!e) e = window.event;
+
       if (e.type === "keydown" && e.keyCode === 18) {
         if (this.allowChangingPosition) {
           this.buttons.closeButton.title = "Change titlebar position";
-          this.buttons.closeButton.className += " position"; 
+          this.buttons.closeButton.className += " position";
         }
         this.buttons.minimizeButton.title = "Maximize window";
-        this.buttons.minimizeButton.className += " maximize"; 
+        this.buttons.minimizeButton.className += " maximize";
       } else if (e.type === "keyup" && e.keyCode === 18) {
         if (this.allowChangingPosition) {
           this.buttons.closeButton.title = closeTitle + closeChangeTitle;
@@ -177,8 +177,8 @@
         this.buttons.minimizeButton.className = this.buttons.minimizeButton.className.replace(" maximize", "");
       }
     }).bind(this);
-	
-	  document.addEventListener("keydown", this.__MonitorAltKey);
+
+    document.addEventListener("keydown", this.__MonitorAltKey);
     document.addEventListener("keyup", this.__MonitorAltKey);
 
     if (this._browser) {
