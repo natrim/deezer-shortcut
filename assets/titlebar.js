@@ -53,6 +53,8 @@
       }
       this._name = this._position + "-titlebar";
       this.add(this.__icon, this.__text);
+      this.buttons.closeButton.title = "Change titlebar position";
+      this.buttons.closeButton.className += " position"; 
     } else { //close
       global.chrome.app.window.current().close();
     }
@@ -126,6 +128,7 @@
   TitleBar.prototype.add = function addTitlebar(titlebar_icon_url, titlebar_text) {
     this.__icon = titlebar_icon_url;
     this.__text = titlebar_text;
+    this.buttons = { };
     var document = global.document;
     var titlebar = document.createElement("div");
     titlebar.setAttribute("id", this._name);
@@ -141,30 +144,63 @@
     title.innerText = titlebar_text;
     titlebar.appendChild(title);
 
+    var closeTitle = "Close";
+    var closeChangeTitle = "\n\n(Alt+click changes titlebar position)";
     var closeButton = this.creator.createButton(this._name + "-button titlebar-close-button",
-      "", "Close" + (this.allowChangingPosition ? "\n\n(Alt+click changes titlebar position)" : ""), null, null, this.closeWindow.bind(this));
+      "", closeTitle + (this.allowChangingPosition ? closeChangeTitle : ""), null, null, this.closeWindow.bind(this));
     titlebar.appendChild(closeButton);
+    this.buttons.closeButton = closeButton;
 
+    var minimizeTitle = "Minimize";
+    var minimizeChangeTitle = "\n\n(Alt+click maximizes window)";
     var minimizeButton = this.creator.createButton(this._name + "-button titlebar-minimize-button",
-      "", "Minimize" + "\n\n(Alt+click maximizes window)", null, null, this.minimizeWindow.bind(this));
+      "", minimizeTitle + minimizeChangeTitle , null, null, this.minimizeWindow.bind(this));
     titlebar.appendChild(minimizeButton);
+    this.buttons.minimizeButton = minimizeButton;
+    
+    this.__MonitorAltKey = (function MonitorAltKey(e) {
+      if (!e) e=window.event;
+    
+      if (e.type === "keydown" && e.keyCode === 18) {
+        if (this.allowChangingPosition) {
+          this.buttons.closeButton.title = "Change titlebar position";
+          this.buttons.closeButton.className += " position"; 
+        }
+        this.buttons.minimizeButton.title = "Maximize window";
+        this.buttons.minimizeButton.className += " maximize"; 
+      } else if (e.type === "keyup" && e.keyCode === 18) {
+        if (this.allowChangingPosition) {
+          this.buttons.closeButton.title = closeTitle + closeChangeTitle;
+          this.buttons.closeButton.className = this.buttons.closeButton.className.replace(" position", "");
+        }
+        this.buttons.minimizeButton.title = minimizeTitle + minimizeChangeTitle;
+        this.buttons.minimizeButton.className = this.buttons.minimizeButton.className.replace(" maximize", "");
+      }
+    }).bind(this);
+	
+	  document.addEventListener("keydown", this.__MonitorAltKey);
+    document.addEventListener("keyup", this.__MonitorAltKey);
 
     if (this._browser) {
       var backButton = this.creator.createButton(this._name + "-button titlebar-back-button",
         "", "Back", null, null, this._browser.back.bind(this._browser));
       titlebar.appendChild(backButton);
+      this.buttons.backButton = backButton;
 
       var forwardButton = this.creator.createButton(this._name + "-button titlebar-forward-button",
         "", "Forward", null, null, this._browser.forward.bind(this._browser));
       titlebar.appendChild(forwardButton);
+      this.buttons.forwardButton = forwardButton;
 
       var reloadButton = this.creator.createButton(this._name + "-button titlebar-reload-button",
         "", "Reload", null, null, this._browser.reload.bind(this._browser));
       titlebar.appendChild(reloadButton);
+      this.buttons.reloadButton = reloadButton;
 
       var homeButton = this.creator.createButton(this._name + "-button titlebar-home-button",
         "", "Home", null, null, this._browser.home.bind(this._browser));
       titlebar.appendChild(homeButton);
+      this.buttons.homeButton = homeButton;
     }
 
     var divider = document.createElement("div");
@@ -195,6 +231,10 @@
       if (this.onfocus) global.removeEventListener("focus", this.onfocus);
       if (this.onblur) global.removeEventListener("blur", this.onblur);
       if (this.onresize) global.removeEventListener("resize", this.onresize);
+      if (this.__MonitorAltKey) {
+        document.removeEventListener("keydown", this.__MonitorAltKey);
+        document.removeEventListener("keyup", this.__MonitorAltKey);
+      }
       this.resetContentStyle();
     }
   };

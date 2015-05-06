@@ -136,8 +136,14 @@ body {
 .titlebar-close-button:before {
     content: "\f00d";
 }
+.titlebar-close-button.position:before {
+    content: "\f064";
+}
 .titlebar-minimize-button:before {
     content: "\f068";
+}
+.titlebar-minimize-button.maximize:before {
+    content: "\f067";
 }
 .titlebar-back-button:before {
     content: "\f053";
