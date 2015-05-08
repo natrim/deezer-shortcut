@@ -162,19 +162,23 @@
       if (!e) e = window.event;
 
       if (e.type === "keydown" && e.keyCode === 18) {
-        if (this.allowChangingPosition) {
+        if (this.allowChangingPosition && this.buttons.closeButton.className.search("position") === -1) {
           this.buttons.closeButton.title = "Change titlebar position";
           this.buttons.closeButton.className += " position";
         }
-        this.buttons.minimizeButton.title = "Maximize window";
-        this.buttons.minimizeButton.className += " maximize";
+        if (this.buttons.minimizeButton.className.search("maximize") === -1) {
+          this.buttons.minimizeButton.title = "Maximize window";
+          this.buttons.minimizeButton.className += " maximize";
+        }
       } else if (e.type === "keyup" && e.keyCode === 18) {
-        if (this.allowChangingPosition) {
+        if (this.allowChangingPosition && this.buttons.closeButton.className.search("position") !== -1) {
           this.buttons.closeButton.title = closeTitle + closeChangeTitle;
           this.buttons.closeButton.className = this.buttons.closeButton.className.replace(" position", "");
         }
-        this.buttons.minimizeButton.title = minimizeTitle + minimizeChangeTitle;
-        this.buttons.minimizeButton.className = this.buttons.minimizeButton.className.replace(" maximize", "");
+        if (this.buttons.minimizeButton.className.search("maximize") !== -1) {
+          this.buttons.minimizeButton.title = minimizeTitle + minimizeChangeTitle;
+          this.buttons.minimizeButton.className = this.buttons.minimizeButton.className.replace(" maximize", "");
+        }
       }
     }).bind(this);
 
