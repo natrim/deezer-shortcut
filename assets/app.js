@@ -1,6 +1,7 @@
 var viewIsLoaded = false;
 window.onload = function () {
-	var browserControl = new BrowserControl('#deezerview', 'http://www.deezer.com/');
+    var webview = document.querySelector('#deezerview');
+	var browserControl = new BrowserControl('#deezerview', webview.src);
 	var titlebar = new TitleBar('left', true, browserControl);
 	titlebar.add('assets/icon_16.png', 'Deezer Shortcut');
 
@@ -9,7 +10,6 @@ window.onload = function () {
 		document.querySelector('#deezerview').reload();
 	}, 10000);
 
-	var webview = document.querySelector('#deezerview');
 	webview.addEventListener('contentload', function () {
 		if (loading) {
 			clearTimeout(loading);
@@ -45,7 +45,19 @@ window.onload = function () {
 	});
 	webview.addEventListener('newwindow', function (e) {
 		e.preventDefault();
-		window.open(e.targetUrl);
+		if (e.targetUrl.search('accounts.google.com') !== -1) {
+		    document.querySelector('#dialog-title').innerHTML = 'Dialog Alert';
+		    document.querySelector('#dialog-cancel').style.display = 'none';
+            document.querySelector('#dialog-content').innerHTML = 'Google sign-in not implemented!';
+            document.querySelector('#dialog').showModal();
+		} else if (e.targetUrl.search('facebook.com') !== -1) {
+		    document.querySelector('#dialog-title').innerHTML = 'Dialog Alert';
+		    document.querySelector('#dialog-cancel').style.display = 'none';
+            document.querySelector('#dialog-content').innerHTML = 'Facebook sign-in not implemented!';
+            document.querySelector('#dialog').showModal();
+		} else {
+		    window.open(e.targetUrl);
+		}
 	});
 	webview.addEventListener('dialog', function (e) {
 		if (e.messageType === 'prompt') {
@@ -77,13 +89,17 @@ window.onload = function () {
 		}
 	});
 	document.querySelector('#dialog-ok').addEventListener('click', function () {
-		returnDialog.ok();
-		returnDialog = null;
+	    if (returnDialog) {
+		    returnDialog.ok();
+		    returnDialog = null;
+	    }
 		document.querySelector('#dialog').close();
 	});
 	document.querySelector('#dialog-cancel').addEventListener('click', function () {
-		returnDialog.cancel();
-		returnDialog = null;
+		if (returnDialog) {
+		    returnDialog.cancel();
+		    returnDialog = null;
+		}
 		document.querySelector('#dialog').close();
 	});
 
@@ -95,16 +111,16 @@ function deezerUnlimited() {
 	if (!viewIsLoaded) return;
 	var source =
 		"window.loadFacebox = function loadFacebox(page){console.log('no_pub');};" +
-		"if(naboo)if(naboo.removeAds)naboo.removeAds();" +
-		"if(stopAudioAdsTimer)stopAudioAdsTimer();" +
+		"if(typeof naboo !== 'undefined')if(naboo.removeAds)naboo.removeAds();" +
+		"if(typeof stopAudioAdsTimer === 'function')stopAudioAdsTimer();" +
 		"adsTimeoutId=-1;" +
-		"if(dzPlayer)if(dzPlayer.logListenId)clearTimeout(dzPlayer.logListenId);" +
-		"if(dzPlayer)if(dzPlayer.setForbiddenListen)dzPlayer.setForbiddenListen(false);" +
-		"if(dzPlayer)if(dzPlayer.user_status && dzPlayer.user_status.ads_display)dzPlayer.user_status = '';" +
-		"$('.area_picto_t-b').html('<span class=\\\"h_icn_timer sprite_head\\\"></span>');" +
-		"$('#header_content_restriction_hovercard').hide();" + "$('#header_content_restriction .header_hovercard').html('');" +
-		"$('#header_content_restriction .remaining').css('width','100%').css('background-color','#3995CD');" +
-		"$('#header_content_restriction').unbind('mouseover').bind('mouseover', function(){$('.header_hovercard').show();});";
+		"if(typeof dzPlayer !== 'undefined')if(dzPlayer.logListenId)clearTimeout(dzPlayer.logListenId);" +
+		"if(typeof dzPlayer !== 'undefined')if(dzPlayer.setForbiddenListen)dzPlayer.setForbiddenListen(false);" +
+		"if(typeof dzPlayer !== 'undefined')if(dzPlayer.user_status && dzPlayer.user_status.ads_display)dzPlayer.user_status = '';" +
+		"if(typeof $ !== 'undefined') { $('.area_picto_t-b').html('<span class=\\\"h_icn_timer sprite_head\\\"></span>'); }" +
+		"if(typeof $ !== 'undefined') { $('#header_content_restriction_hovercard').hide();" + "$('#header_content_restriction .header_hovercard').html(''); }" +
+		"if(typeof $ !== 'undefined') { $('#header_content_restriction .remaining').css('width','100%').css('background-color','#3995CD'); }" +
+		"if(typeof $ !== 'undefined') { $('#header_content_restriction').unbind('mouseover').bind('mouseover', function(){$('.header_hovercard').show();}); }";
 
 	document.querySelector('#deezerview').executeScript({
 		code: "var script=document.createElement('script');script.textContent=\"" + source + "\";(document.head||document.documentElement).appendChild(script);script.parentNode.removeChild(script);"

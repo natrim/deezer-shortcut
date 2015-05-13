@@ -1,10 +1,11 @@
 (function (global) {
   "use strict";
 
-  global.BrowserControl = function BrowserControl(view, homeurl) {
+  var BrowserControl = function BrowserControl(view, homeurl) {
     this.webview = view;
     this.homeurl = homeurl;
   };
+  global.BrowserControl = BrowserControl;
 
   BrowserControl.prototype.back = function back() {
     var webview = global.document.querySelector(this.webview);
@@ -30,7 +31,7 @@
     return this;
   };
 
-  global.TitleBar = function TitleBar(position, allowChangingPosition, browser) {
+  var TitleBar = function TitleBar(position, allowChangingPosition, browser) {
     this._name = position + "-titlebar";
     if (position !== "left" && position !== "right" && position !== "top" && position !== "bottom") throw "wrong position!";
     this._position = position;
@@ -38,6 +39,7 @@
     if (!global.document.getElementById("content")) throw "you need to have all things wrapped inside <div id=\"content\" />!";
     this._browser = browser;
   };
+  global.TitleBar = TitleBar;
 
   TitleBar.prototype.closeWindow = function closeWindow(e) {
     if (e.altKey && this.allowChangingPosition) { //change titlebar position
