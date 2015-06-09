@@ -88,12 +88,14 @@
 
   TitleBar.prototype.minimizeWindow = function minimizeWindow(e) {
     var window = global.chrome.app.window.current();
-    if (window.isMinimized() || window.isMaximized()) {
-      window.restore();
-    } else if (e.altKey) {
-      window.maximize();
+    if (e.altKey) {
+      if (window.isMaximized()) {
+        window.restore();
+      } else {
+        window.maximize();
+      }
     } else {
-      window.minimize();
+        window.minimize();
     }
 
     return this;
