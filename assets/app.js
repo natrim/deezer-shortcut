@@ -102,30 +102,7 @@ window.onload = function () {
 		}
 		document.querySelector('#dialog').close();
 	});
-
-	deezerUnlimited();
-	setInterval(deezerUnlimited, 5000);
 };
-
-function deezerUnlimited() {
-	if (!viewIsLoaded) return;
-	var source =
-		"window.loadFacebox = function loadFacebox(page){console.log('no_pub');};" +
-		"if(typeof naboo !== 'undefined')if(naboo.removeAds)naboo.removeAds();" +
-		"if(typeof stopAudioAdsTimer === 'function')stopAudioAdsTimer();" +
-		"adsTimeoutId=-1;" +
-		"if(typeof dzPlayer !== 'undefined')if(dzPlayer.logListenId)clearTimeout(dzPlayer.logListenId);" +
-		"if(typeof dzPlayer !== 'undefined')if(dzPlayer.setForbiddenListen)dzPlayer.setForbiddenListen(false);" +
-		"if(typeof dzPlayer !== 'undefined')if(dzPlayer.user_status && dzPlayer.user_status.ads_display)dzPlayer.user_status = '';" +
-		"if(typeof $ !== 'undefined') { $('.area_picto_t-b').html('<span class=\\\"h_icn_timer sprite_head\\\"></span>'); }" +
-		"if(typeof $ !== 'undefined') { $('#header_content_restriction_hovercard').hide();" + "$('#header_content_restriction .header_hovercard').html(''); }" +
-		"if(typeof $ !== 'undefined') { $('#header_content_restriction .remaining').css('width','100%').css('background-color','#3995CD'); }" +
-		"if(typeof $ !== 'undefined') { $('#header_content_restriction').unbind('mouseover').bind('mouseover', function(){$('.header_hovercard').show();}); }";
-
-	document.querySelector('#deezerview').executeScript({
-		code: "var script=document.createElement('script');script.textContent=\"" + source + "\";(document.head||document.documentElement).appendChild(script);script.parentNode.removeChild(script);"
-	});
-}
 
 chrome.commands.onCommand.addListener(function (command) {
 	if (!viewIsLoaded) return;
