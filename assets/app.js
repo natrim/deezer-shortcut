@@ -2,8 +2,8 @@ var viewIsLoaded = false;
 window.onload = function () {
     var webview = document.querySelector('#deezerview');
 	var browserControl = new BrowserControl('#deezerview', webview.src);
-	var titlebar = new TitleBar('left', true, browserControl);
-	titlebar.add('assets/icon_16.png', 'Deezer Shortcut');
+	var titlebar = new TitleBar('left', 'assets/icon_16.png', 'Deezer Shortcut', true, browserControl);
+	titlebar.bind();
 
 	var isLoaded = false;
 	var loading = setTimeout(function () {
