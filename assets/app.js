@@ -1,3 +1,4 @@
+/* global chrome, BrowserControl, TitleBar */
 var viewIsLoaded = false;
 window.onload = function () {
     var webview = document.querySelector('#deezerview');
@@ -16,10 +17,19 @@ window.onload = function () {
     var titlebar = new TitleBar('left', 'assets/icon_16.png', 'Deezer Shortcut', true, browserControl);
     titlebar.bind();
 
-    var isLoaded = false;
-    var loading = setTimeout(function () {
-        document.querySelector('#deezerview').reload();
-    }, 10000);
+	var isLoaded = false;
+	var loadLimit = 10;
+	var loading = setTimeout(function() {
+		if (loadLimit >= 10) {
+			document.querySelector('#dialog-title').innerHTML = 'Error';
+			document.querySelector('#dialog-content').innerHTML = 'Cannot open Deezer! Check your internet connection and use Reload in titlebar.';
+			document.querySelector('#dialog-cancel').style.display = 'none';
+			document.querySelector('#dialog').showModal();
+		} else {
+			loadLimit++;
+			document.querySelector('#mainwebview').reload();
+		}
+	}, 10000);
 
     webview.addEventListener('contentload', function () {
         if (loading) {
