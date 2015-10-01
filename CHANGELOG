@@ -1,0 +1,20 @@
+ 1.1.7 - small code cleanup
+ 1.1.6 - ads be gone (maybe)
+ 1.1.5 - titlebar now saves position, fixed broken skip
+ 1.1.4 - add note about not working google and fb auth
+ 1.1.3 - fix control toggle on windows
+ 1.1.2 - prettify some ugly things
+ 1.1.1 - antialising on windows fix
+ 1.1.0 - changed button icons
+          - titlebar position change 
+              on alt click on close button
+          - maximize support
+              on alt click on minimize button
+ 1.0.13 - allow opening dzr:// protocol
+ 1.0.12 - just for fun
+ 1.0.11 - fixed window resizing and bar coverage
+ 1.0.10 - fixed browse controls on Windows
+ 1.0.9 - typo fix
+ 1.0.8 - added browse controls
+ 1.0.x - some coding (probadly)
+ 
