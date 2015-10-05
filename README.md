@@ -1,9 +1,10 @@
 Simple app that opens deezer.com in own window and binds itself to media keys.
 
 NOTE: this app is NOT developed by Deezer.
-NOTE2: this app maybe works
 
-TODO's:
+NOTE2: this app may works, or not .)
+
+TODO's (probadly):
 - right click context menu with browser controls
 - better window size handling
 - editable keys
