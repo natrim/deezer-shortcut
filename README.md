@@ -1,5 +1,7 @@
 Simple app that opens deezer.com in own window and binds itself to media keys.
 
+Available at [Chrome Web Store](https://chrome.google.com/webstore/detail/deezer-shortcut/paccflbfblppaoidibhflahkogodngie) for free.
+
 NOTE: this app is NOT developed by Deezer.
 
 NOTE2: this app may works, or not .)
