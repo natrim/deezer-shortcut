@@ -55,6 +55,13 @@
       "suggested_key": {
         "default": "MediaStop"
       }
+    },
+    "LIKE-MK": {
+      "description": "Like Key",
+      "global": true,
+      "suggested_key": {
+        "default": "Ctrl+Shift+Up"
+      }
     }
   },
 

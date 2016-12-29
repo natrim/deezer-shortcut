@@ -158,5 +158,12 @@ chrome.commands.onCommand.addListener(function (command) {
             code: "Array.prototype.slice.call(document.querySelectorAll('#player_control_pause,button.control-pause')).forEach(function(el) { el.click(); });"
         });
         break;
+    case 'LIKE-MK':
+        //LIKE_MK
+        console.log('LIKE KEY PRESSED')
+        webview.executeScript({
+            code: "document.querySelectorAll('a[role=\"button\"].evt-over.evt-out.action:not(.action-hide)') .forEach(function(el) { el.click(); })"
+        });
+        break;
     }
 });
