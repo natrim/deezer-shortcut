@@ -98,7 +98,7 @@ window.onload = function () {
                 "Array.prototype.slice.call(document.querySelectorAll('h3.player-track-artist a.player-track-link')).forEach(function(el){" +
                 "nextArtist.push(el.innerHTML)" +
                 "});" +
-                "nextArtist = nextArtist.join(', ');" +
+                "nextArdtist = nextArtist.join(', ');" +
                 "console.log(JSON.stringify({id: 'deezer_shortcut_handle_events', action: 'change_music', data: {nextTitle: nextTitle, nextArtist: nextArtist, nextCover: nextCover}}));" +
                 "}, 100);" +
                 "});" +
@@ -227,7 +227,7 @@ chrome.commands.onCommand.addListener(function (command) {
     case 'LIKE-MK':
         //LIKE_MK
         webview.executeScript({
-            code: "document.querySelectorAll('a[role=\"button\"].evt-over.evt-out.action:not(.action-hide)') .forEach(function(el) { el.click(); })"
+            code: "var btns = Array.prototype.slice.call(document.querySelectorAll('a[role=\"button\"].evt-over.evt-out.action:not(.action-hide)'));if (btns.length>1){btns[1].click()}else{btns[0].click()}"
         });
         break;
     }
