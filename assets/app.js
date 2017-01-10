@@ -1,7 +1,47 @@
 /* global chrome, BrowserControl, TitleBar */
 var viewIsLoaded = false;
+
 window.onload = function () {
+    // Used to replace some html entities into normal chars
+    var htmlStr = function(str){
+        return String(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot/g, '"');
+    };
+
     var webview = document.querySelector('#deezerview');
+
+    // Add listener for consolemessage from webview
+    webview.addEventListener('consolemessage', function(e) {
+        try {
+            var result = JSON.parse(e.message);
+            if (result){
+                if (result.id === 'deezer_shortcut_handle_events'){
+                    switch (result.action){
+                        case 'change_music':
+                            // Get image from Deezer
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('GET', result.data.nextCover, true);
+                            xhr.responseType = 'blob';
+                            xhr.onload = function(e) {
+                                // Create & show notification
+                                chrome.notifications.create('music-changed',{
+                                    type: 'basic',
+                                    iconUrl: window.URL.createObjectURL(this.response),
+                                    title: htmlStr(result.data.nextTitle),
+                                    message: htmlStr(result.data.nextArtist)
+                                });
+
+                            };
+                            xhr.send();
+                            break;
+                    }
+                }
+            }
+
+        }catch (e){
+            // Not for our purpose
+        }
+
+    });
 
     //block ads
     webview.request.onBeforeRequest.addListener(
@@ -44,6 +84,30 @@ window.onload = function () {
         document.querySelector('#deezerview').executeScript({
             code: "var script=document.createElement('script');script.textContent=\"" + source + "\";(document.head||document.documentElement).appendChild(script);script.parentNode.removeChild(script);"
         });
+
+        // Send message into host to handle music changes
+        webview.executeScript(
+            {
+                code: "Array.prototype.slice.call(document.querySelectorAll('div.player-track .player-track-link')).forEach(function(el){" +
+                "el.addEventListener('DOMSubtreeModified', function(){" +
+                "var nextCover, nextTitle, nextArtist = '';" +
+                "window.setTimeout(function(){" +
+                "nextCover = Array.prototype.slice.call(document.querySelectorAll('div.player-cover img'))[0].src;" +
+                "nextTitle = Array.prototype.slice.call(document.querySelectorAll('h2.player-track-title a.player-track-link'))[0].innerHTML;" +
+                "nextArtist = new Array();" +
+                "Array.prototype.slice.call(document.querySelectorAll('h3.player-track-artist a.player-track-link')).forEach(function(el){" +
+                "nextArtist.push(el.innerHTML)" +
+                "});" +
+                "nextArtist = nextArtist.join(', ');" +
+                "console.log(JSON.stringify({id: 'deezer_shortcut_handle_events', action: 'change_music', data: {nextTitle: nextTitle, nextArtist: nextArtist, nextCover: nextCover}}));" +
+                "}, 100);" +
+                "});" +
+                "});"
+            }, function(result){
+                console.log(result);
+            });
+
+
     });
     webview.addEventListener('permissionrequest', function (e) {
         if (e.permission === 'download') {
@@ -130,9 +194,11 @@ window.onload = function () {
     });
 };
 
+
 chrome.commands.onCommand.addListener(function (command) {
     if (!viewIsLoaded) return;
     var webview = document.querySelector('#deezerview');
+
     switch (command) {
     case 'NEXT-MK':
         //NEXT_MK
@@ -160,7 +226,6 @@ chrome.commands.onCommand.addListener(function (command) {
         break;
     case 'LIKE-MK':
         //LIKE_MK
-        console.log('LIKE KEY PRESSED')
         webview.executeScript({
             code: "document.querySelectorAll('a[role=\"button\"].evt-over.evt-out.action:not(.action-hide)') .forEach(function(el) { el.click(); })"
         });
