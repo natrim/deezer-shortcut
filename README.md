@@ -1,4 +1,4 @@
-This a fork from original dev by Natrim: [https://github.com/natrim/deezer-shortcut/](https://github.com/natrim/deezer-shortcut/)
+This is a fork from original dev by Natrim: [https://github.com/natrim/deezer-shortcut/](https://github.com/natrim/deezer-shortcut/)
 
 ---
 
