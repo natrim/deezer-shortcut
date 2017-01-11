@@ -98,7 +98,7 @@ window.onload = function () {
                 "Array.prototype.slice.call(document.querySelectorAll('h3.player-track-artist a.player-track-link')).forEach(function(el){" +
                 "nextArtist.push(el.innerHTML)" +
                 "});" +
-                "nextArdtist = nextArtist.join(', ');" +
+                "nextArtist = nextArtist.join(', ');" +
                 "console.log(JSON.stringify({id: 'deezer_shortcut_handle_events', action: 'change_music', data: {nextTitle: nextTitle, nextArtist: nextArtist, nextCover: nextCover}}));" +
                 "}, 100);" +
                 "});" +
